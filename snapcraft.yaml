@@ -7,10 +7,7 @@ description: |
   create data engineering and data science pipelines that are
   reproducible, maintainable, and modular.
 base: core24
-# This makes the prime stage fail,
-# let's use a fixed version for now
-# adopt-info: kedro
-version: '0.19.13'
+adopt-info: kedro
 
 grade: devel
 confinement: strict
@@ -27,11 +24,15 @@ parts:
   kedro:
     plugin: uv
     source: https://github.com/kedro-org/kedro.git
+    source-branch: &VERSION '0.19.13'
     source-depth: 1
     build-snaps:
       - astral-uv
     build-environment:
       - UV_FROZEN: "false"  # There is no `uv.lock`, it has to be generated
+    override-pull: |
+      craftctl default
+      craftctl set version=$(git describe --tags --abbrev=0)
 
 platforms:
   amd64:
