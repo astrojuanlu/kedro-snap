@@ -33,6 +33,10 @@ parts:
     override-pull: |
       craftctl default
       craftctl set version=$(git describe --tags --abbrev=0)
+    stage-packages:
+      - git  # FIXME: git is not capable of cloning https repos: 'remote-https' is not a git command
+      # openssl and libssl3t64 are being filtered out "skipping filtered manifest packages", why?
+      # Should I include them in build-packages?
 
 plugs:
   kedro-config:
