@@ -18,7 +18,7 @@ apps:
     plugs:
       - network
       - home
-      - personal-files
+      - kedro-config
 
 parts:
   kedro:
@@ -33,6 +33,12 @@ parts:
     override-pull: |
       craftctl default
       craftctl set version=$(git describe --tags --abbrev=0)
+
+plugs:
+  kedro-config:
+    interface: personal-files
+    write:
+      - $HOME/.config/kedro
 
 platforms:
   amd64:
