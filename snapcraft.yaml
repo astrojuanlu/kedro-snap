@@ -24,34 +24,14 @@ apps:
       - personal-files
 
 parts:
-  # The `uv-deps` step is inspired by https://github.com/lengau/astral-ty/commit/471406a,
-  # but I don't think it's documented in https://documentation.ubuntu.com/snapcraft/stable/reference/plugins/uv_plugin/ ?
-  # If not included, the error message says
-  # `'uv' not found and part 'kedro' does not depend on a part named 'uv-deps' that would satisfy the dependency.`
-  # Maybe `uv` needs to be added to part dependencies? See
-  # https://github.com/canonical/craft-parts/blob/4359cf3/craft_parts/plugins/uv_plugin.py#L62-L82
-
-  # uv-deps:
-  #   plugin: nil
-  #   build-snaps:
-  #     - astral-uv
-  #   build-packages:
-  #     - python3-maturin
-
-  # Apart from the above, I cannot use the `uv` plugin
-  # because there is no `uv.lock`,
-  # I can generate one right after pull or before build,
-  # see https://documentation.ubuntu.com/snapcraft/stable/how-to/crafting/customize-lifecycle-steps-and-part-variables/
-
-  # kedro:
-  #   plugin: uv
-  #   source: https://github.com/kedro-org/kedro.git
-  #   source-depth: 0
-
   kedro:
-    plugin: python
+    plugin: uv
     source: https://github.com/kedro-org/kedro.git
     source-depth: 1
+    build-snaps:
+      - astral-uv
+    build-environment:
+      - UV_FROZEN: "false"  # There is no `uv.lock`, it has to be generated
 
 platforms:
   amd64:
