@@ -51,7 +51,7 @@ parts:
   kedro:
     plugin: python
     source: https://github.com/kedro-org/kedro.git
-    source-depth: 0
+    source-depth: 1
 
 platforms:
   amd64:
